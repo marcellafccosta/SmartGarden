@@ -1,0 +1,243 @@
+[
+    {
+        "id": "04090ce6a682faca",
+        "type": "tab",
+        "label": "Smart Garden",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "59061091b79e4cfa",
+        "type": "cloudantplus",
+        "host": "https://f1c0dcf9-5075-4061-a1f8-2f4ca596058a-bluemix.cloudantnosqldb.appdomain.cloud",
+        "name": "primeira credencial",
+        "useapikey": true
+    },
+    {
+        "id": "22e9a643e66fb73a",
+        "type": "http in",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "url": "/PlantaPost",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "879f13ed321aaae0"
+            ]
+        ]
+    },
+    {
+        "id": "37e652e53baf4852",
+        "type": "http response",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "8e5dbaa5db43c705",
+        "type": "http in",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "url": "/PlantaGet",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 120,
+        "wires": [
+            [
+                "920436c068d500e2"
+            ]
+        ]
+    },
+    {
+        "id": "12b7b362dfe6d8ca",
+        "type": "http response",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4563485477b47aa8",
+        "type": "http in",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "url": "/SensorPost",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 440,
+        "wires": [
+            [
+                "70996ec1c2219216"
+            ]
+        ]
+    },
+    {
+        "id": "d8a86ee2fca62a47",
+        "type": "http response",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c52a4a3e66e7db9a",
+        "type": "http in",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "url": "/SensorGet",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 340,
+        "wires": [
+            [
+                "eb2e2162106b4ced"
+            ]
+        ]
+    },
+    {
+        "id": "1778ea05bc9e608f",
+        "type": "http response",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "879f13ed321aaae0",
+        "type": "cloudantplus out",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "cloudant": "59061091b79e4cfa",
+        "database": "smartgarden20",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 480,
+        "y": 220,
+        "wires": [
+            [
+                "12b7b362dfe6d8ca"
+            ]
+        ]
+    },
+    {
+        "id": "f6a43b96ffcf31b9",
+        "type": "cloudantplus out",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "cloudant": "59061091b79e4cfa",
+        "database": "sensor20",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 520,
+        "y": 440,
+        "wires": [
+            [
+                "1778ea05bc9e608f"
+            ]
+        ]
+    },
+    {
+        "id": "920436c068d500e2",
+        "type": "cloudantplus in",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "cloudant": "59061091b79e4cfa",
+        "database": "smartgarden20",
+        "service": "_ext_",
+        "search": "_all_",
+        "design": "",
+        "index": "",
+        "x": 480,
+        "y": 120,
+        "wires": [
+            [
+                "37e652e53baf4852"
+            ]
+        ]
+    },
+    {
+        "id": "eb2e2162106b4ced",
+        "type": "cloudantplus in",
+        "z": "04090ce6a682faca",
+        "name": "",
+        "cloudant": "59061091b79e4cfa",
+        "database": "sensor20",
+        "service": "_ext_",
+        "search": "_all_",
+        "design": "",
+        "index": "",
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "12d88960921ea23a"
+            ]
+        ]
+    },
+    {
+        "id": "12d88960921ea23a",
+        "type": "function",
+        "z": "04090ce6a682faca",
+        "name": "function 1",
+        "func": "msg.payload.sort((a, b) => a.timestamp - b.timestamp); // mais antigo primeiro\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "d8a86ee2fca62a47"
+            ]
+        ]
+    },
+    {
+        "id": "70996ec1c2219216",
+        "type": "function",
+        "z": "04090ce6a682faca",
+        "name": "function 2",
+        "func": "msg.payload.timestamp = Date.now(); // adiciona o timestamp em milissegundos\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 440,
+        "wires": [
+            [
+                "f6a43b96ffcf31b9"
+            ]
+        ]
+    }
+]
